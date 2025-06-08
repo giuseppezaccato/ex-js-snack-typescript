@@ -14,13 +14,13 @@ if (typeof datoAPI === "string") {
     //* datoAPI ? console.log(`YES`) : console.log(`NO`)
     console.warn(datoAPI ? "true" : "false")
 } else if (datoAPI === null) {
-    //todo Se è null: stampa “Il dato è vuoto”
+    //BONUS Se è null: stampa “Il dato è vuoto”
     console.log(`il dato è vuoto`);
 } else if (Array.isArray(datoAPI)) {
-    //todo Se è un array: stampa la sua lunghezza
+    //BONUS Se è un array: stampa la sua lunghezza
     console.log(datoAPI.length)
 } else if (datoAPI instanceof Promise) {
-    //todo Se è una Promise: attendi che si risolva e stampa il valore del resolve.
+    //BONUS Se è una Promise: attendi che si risolva e stampa il valore del resolve.
     datoAPI.then(value => console.log(value))
 } else {
     //todo In tutti gli altri casi: stampa “Tipo non supportato”
@@ -29,37 +29,69 @@ if (typeof datoAPI === "string") {
 
 //task 🏆 Snack 2
 // Crea un type alias Dipendente che rappresenta un lavoratore con i seguenti dati:
-// nome → stringa
-// cognome → stringa
-// annoNascita → numero
-// sesso → Può essere solo "m" o "f".
-// anniDiServizio (array di numeri, es. [2014, 2015, 2017, 2018])
 
+type Dipendente = {
+    //todo nome → stringa
+    nome: string;
+    // cognome → stringa
+    cognome: string;
+    //todo annoNascita → numero
+    annoDiNascita: number;
+    //todo sesso → Può essere solo "m" o "f".
+    sesso: "m" | "f";
+    //todo anniDiServizio (array di numeri, es. [2014, 2015, 2017, 2018])
+    anniDiServizio: number[];
 
-
-// 🎯 BONUS
-// Il type alias Dipendente, ha anche i seguenti dati:
-// emailAziendale → Email assegnata al dipendente (non si può modificare)
-// contratto → Specifica il tipo di contratto del dipendente, con valori limitati a “indeterminato”, “determinato” o “freelance”.
+    //BONUS emailAziendale → Email assegnata al dipendente (non si può modificare)
+    readonly emailAziendale: string;
+    //BONUS contratto → Specifica il tipo di contratto del dipendente, con valori limitati a “indeterminato”, “determinato” o “freelance”.
+    contratto: "indeterminato" | "freelance" | "determinato"
+}
 
 
 //task 🏆 Snack 3
 // Estendiamo Dipendente per definire due ruoli specifici all'interno dell'azienda:
+
+
 // Developer
-// livelloEsperienza → Il livello di esperienza del developer (le scelte possibili sono solo “Junior”, “Mid” o “Senior”).
-// linguaggi → Un array contenente i linguaggi di programmazione utilizzati dal developer in azienda (opzionale, perché i neo assunti non hanno ancora dei linguaggi assegnati).
-// certificazioni → Un array di stringhe contenente certificazioni tecniche ottenute dal developer (può essere vuoto).
+type Developer = Dipendente & {
+    // livelloEsperienza → Il livello di esperienza del developer (le scelte possibili sono solo “Junior”, “Mid” o “Senior”).
+    livelloEsperienza: "junior" | "mid" | "senior";
+    // linguaggi → Un array contenente i linguaggi di programmazione utilizzati dal developer in azienda (opzionale, perché i neo assunti non hanno ancora dei linguaggi assegnati).
+    linguaggi?: string[];
+    // certificazioni → Un array di stringhe contenente certificazioni tecniche ottenute dal developer (può essere vuoto).
+    certificazioni: string[];
+}
 
 // ProjectManager
-// teamSize → Il numero di persone nel team gestito dal Project Manager (può essere null se non ha ancora un team assegnato).
-// budgetGestito → Il totale del budget annuale gestito dal PM (opzionale).
-// stakeholderPrincipali → Un array di stringhe con i nomi dei principali stakeholder con cui il PM collabora (può essere vuoto).
+type ProjectManager = Dipendente & {
+    //todo teamSize → Il numero di persone nel team gestito dal Project Manager (può essere null se non ha ancora un team assegnato).
+    teamsize: number | null;
+    //todo budgetGestito → Il totale del budget annuale gestito dal PM (opzionale).
+    budgetGestito?: number;
+    //todo stakeholderPrincipali → Un array di stringhe con i nomi dei principali stakeholder con cui il PM collabora (può essere vuoto).
+    stakeholderPrincipali: string[];
+}
+
 
 // 🎯 BONUS
 // Definiamo un nuovo type alias Team, che rappresenta un gruppo di lavoro all'interno dell'azienda:
-// nome → Nome del team (stringa).
-// progettoAttuale → Nome del progetto su cui lavora il team (può essere null se il team è in attesa di assegnazione).
-// budget → Importo numerico del budget assegnato al team (sempre presente).
-// membri → Una tuple in cui il primo elemento è sempre un Project Manager, seguito da uno o più Developers (almeno un developer obbligatorio).
+type Team = {
+    // nome → Nome del team (stringa).
+    nome: string,
+    // progettoAttuale → Nome del progetto su cui lavora il team (può essere null se il team è in attesa di assegnazione).
+    progettoAttuale: string | null,
+    // budget → Importo numerico del budget assegnato al team (sempre presente).
+    budget: number,
+    // membri → Una tuple in cui il primo elemento è sempre un Project Manager, seguito da uno o più Developers (almeno un developer obbligatorio).
+    membri: [ProjectManager, Developer, ...Developer[]]
+    //fix membri: [ProjectManager, [Developer, ...Developer[]]]
 
-// Spazio per eseguire gli snack...
+    //? Differenza
+    // -Primo caso: Gli sviluppatori sono elencati direttamente nella tupla, subito dopo il Project Manager.
+    // -Secondo caso: Gli sviluppatori sono raggruppati in un array come secondo elemento della tupla.
+    //? Scegli quale usare in base a come vuoi accedere ai dati:
+    // -Se vuoi accedere direttamente ai membri come `membri[1]`, `membri[2]`, ecc., usa la prima.
+    // -Se vuoi che tutti i developer siano in un array separato, usa la seconda.
+    //? In entrambi i casi, il primo elemento è sempre un `ProjectManager`. La differenza è solo nella struttura dei developer.
+} 

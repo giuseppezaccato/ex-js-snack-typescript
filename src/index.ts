@@ -1,5 +1,5 @@
-//task 🏆 Snack 1
-//todo Hai ricevuto un dato generico da un'API, ma non sai di che tipo sia… Il tuo compito è controllare il tipo del dato e stampare il valore in modo corretto.
+// 🏆 Snack 1
+//task Hai ricevuto un dato generico da un'API, ma non sai di che tipo sia… Il tuo compito è controllare il tipo del dato e stampare il valore in modo corretto.
 
 let datoAPI: unknown;
 
@@ -27,8 +27,8 @@ if (typeof datoAPI === "string") {
     console.error(`TIPO NON SUPPORTATO`)
 }
 
-//task 🏆 Snack 2
-// Crea un type alias Dipendente che rappresenta un lavoratore con i seguenti dati:
+// 🏆 Snack 2
+//task Crea un type alias Dipendente che rappresenta un lavoratore con i seguenti dati:
 
 type Dipendente = {
     //todo nome → stringa
@@ -49,17 +49,16 @@ type Dipendente = {
 }
 
 
-//task 🏆 Snack 3
-// Estendiamo Dipendente per definire due ruoli specifici all'interno dell'azienda:
-
+// 🏆 Snack 3
+//task Estendiamo Dipendente per definire due ruoli specifici all'interno dell'azienda:
 
 // Developer
 type Developer = Dipendente & {
-    // livelloEsperienza → Il livello di esperienza del developer (le scelte possibili sono solo “Junior”, “Mid” o “Senior”).
+    //todo livelloEsperienza → Il livello di esperienza del developer (le scelte possibili sono solo “Junior”, “Mid” o “Senior”).
     livelloEsperienza: "junior" | "mid" | "senior";
-    // linguaggi → Un array contenente i linguaggi di programmazione utilizzati dal developer in azienda (opzionale, perché i neo assunti non hanno ancora dei linguaggi assegnati).
+    //todo linguaggi → Un array contenente i linguaggi di programmazione utilizzati dal developer in azienda (opzionale, perché i neo assunti non hanno ancora dei linguaggi assegnati).
     linguaggi?: string[];
-    // certificazioni → Un array di stringhe contenente certificazioni tecniche ottenute dal developer (può essere vuoto).
+    //todo certificazioni → Un array di stringhe contenente certificazioni tecniche ottenute dal developer (può essere vuoto).
     certificazioni: string[];
 }
 
@@ -75,15 +74,15 @@ type ProjectManager = Dipendente & {
 
 
 // 🎯 BONUS
-// Definiamo un nuovo type alias Team, che rappresenta un gruppo di lavoro all'interno dell'azienda:
+//task Definiamo un nuovo type alias Team, che rappresenta un gruppo di lavoro all'interno dell'azienda:
 type Team = {
-    // nome → Nome del team (stringa).
+    //BONUS nome → Nome del team (stringa).
     nome: string,
-    // progettoAttuale → Nome del progetto su cui lavora il team (può essere null se il team è in attesa di assegnazione).
+    //BONUS progettoAttuale → Nome del progetto su cui lavora il team (può essere null se il team è in attesa di assegnazione).
     progettoAttuale: string | null,
-    // budget → Importo numerico del budget assegnato al team (sempre presente).
+    //BONUS budget → Importo numerico del budget assegnato al team (sempre presente).
     budget: number,
-    // membri → Una tuple in cui il primo elemento è sempre un Project Manager, seguito da uno o più Developers (almeno un developer obbligatorio).
+    //BONUS membri → Una tuple in cui il primo elemento è sempre un Project Manager, seguito da uno o più Developers (almeno un developer obbligatorio).
     membri: [ProjectManager, Developer, ...Developer[]]
     //fix membri: [ProjectManager, [Developer, ...Developer[]]]
 
